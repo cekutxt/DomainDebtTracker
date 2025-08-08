@@ -24,10 +24,3 @@ Built with **PHP**, **JavaScript**, and **CSS** to deliver a smooth, fast, and r
 - **Database:** MySQL *(optional depending on setup)*  
 
 ---
-
-## 📦 Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/username/DomainDebtTracker.git
-   cd DomainDebtTracker
