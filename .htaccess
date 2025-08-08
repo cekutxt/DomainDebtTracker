@@ -1,0 +1,51 @@
+# Domain Takip Sistemi .htaccess
+
+# PHP ayarları
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+php_value max_execution_time 300
+php_value max_input_time 300
+
+# Dizin listelemeyi kapat
+Options -Indexes
+
+# Güvenlik başlıkları
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Hassas dosyalara erişimi engelle
+<FilesMatch "\.(sql|lock|log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Config dosyalarına erişimi engelle
+<FilesMatch "^(config|database)\.php$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# URL yönlendirmeleri
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /domain-takip/
+    
+    # HTTPS yönlendirmesi (isteğe bağlı)
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # www olmayan versiyona yönlendir (isteğe bağlı)
+    # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    # RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+</IfModule>
+
+# Karakter kodlaması
+AddDefaultCharset UTF-8
+
+# Hata sayfaları
+ErrorDocument 403 /domain-takip/error/403.html
+ErrorDocument 404 /domain-takip/error/404.html
+ErrorDocument 500 /domain-takip/error/500.html
